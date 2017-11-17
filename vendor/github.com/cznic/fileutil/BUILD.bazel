@@ -1,0 +1,42 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "fileutil.go",
+        "test_deps.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "fileutil_darwin.go",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "fileutil_linux.go",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "fileutil_windows.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/cznic/fileutil",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "all_test.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "punch_test.go",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "punch_test.go",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "punch_test.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/cznic/fileutil",
+    library = ":go_default_library",
+)

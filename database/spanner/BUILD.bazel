@@ -1,0 +1,25 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["spanner.go"],
+    importpath = "github.com/mattes/migrate/database/spanner",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:go_default_library",
+        "//database:go_default_library",
+        "//vendor/cloud.google.com/go/spanner:go_default_library",
+        "//vendor/cloud.google.com/go/spanner/admin/database/apiv1:go_default_library",
+        "//vendor/golang.org/x/net/context:go_default_library",
+        "//vendor/google.golang.org/api/iterator:go_default_library",
+        "//vendor/google.golang.org/genproto/googleapis/spanner/admin/database/v1:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["spanner_test.go"],
+    importpath = "github.com/mattes/migrate/database/spanner",
+    library = ":go_default_library",
+    deps = ["//database/testing:go_default_library"],
+)

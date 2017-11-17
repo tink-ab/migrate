@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "hdb.go",
+        "test_deps.go",
+    ],
+    importpath = "github.com/cznic/fileutil/hdb",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/cznic/fileutil/falloc:go_default_library",
+        "//vendor/github.com/cznic/fileutil/storage:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["all_test.go"],
+    importpath = "github.com/cznic/fileutil/hdb",
+    library = ":go_default_library",
+)

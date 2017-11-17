@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "httputils.go",
+        "mimetype.go",
+        "resumablerequestreader.go",
+    ],
+    importpath = "github.com/docker/docker/pkg/httputils",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/Sirupsen/logrus:go_default_library",
+        "//vendor/github.com/docker/docker/pkg/jsonmessage:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "httputils_test.go",
+        "mimetype_test.go",
+        "resumablerequestreader_test.go",
+    ],
+    importpath = "github.com/docker/docker/pkg/httputils",
+    library = ":go_default_library",
+)

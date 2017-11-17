@@ -1,0 +1,70 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "array.go",
+        "bootstrap.go",
+        "clickhouse.go",
+        "clickhouse_exception.go",
+        "clickhouse_ping.go",
+        "clickhouse_profile_info.go",
+        "clickhouse_progress.go",
+        "clickhouse_read_block.go",
+        "clickhouse_read_meta.go",
+        "clickhouse_send_query.go",
+        "clickhouse_write_block.go",
+        "connect.go",
+        "helpers.go",
+        "ip.go",
+        "result.go",
+        "rows.go",
+        "stmt.go",
+        "uuid.go",
+        "value_converter.go",
+        "write_column.go",
+    ],
+    importpath = "github.com/kshvakov/clickhouse",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/kshvakov/clickhouse/lib/binary:go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/column:go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/data:go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/protocol:go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/types:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "clickhouse_naive_test.go",
+        "helpers_test.go",
+        "ip_test.go",
+        "issues_test.go",
+        "uuid_test.go",
+    ],
+    importpath = "github.com/kshvakov/clickhouse",
+    library = ":go_default_library",
+    deps = [
+        "//vendor/github.com/stretchr/testify/assert:go_default_library",
+        "//vendor/github.com/stretchr/testify/require:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = [
+        "clickhouse_columnar_test.go",
+        "clickhouse_custom_types_test.go",
+        "clickhouse_direct_test.go",
+        "clickhouse_negative_test.go",
+        "clickhouse_nullable_test.go",
+        "clickhouse_test.go",
+    ],
+    importpath = "github.com/kshvakov/clickhouse_test",
+    deps = [
+        ":go_default_library",
+        "//vendor/github.com/stretchr/testify/assert:go_default_library",
+    ],
+)

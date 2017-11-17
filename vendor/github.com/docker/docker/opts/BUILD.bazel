@@ -1,0 +1,52 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "hosts.go",
+        "hosts_unix.go",
+        "ip.go",
+        "mount.go",
+        "opts.go",
+        "opts_unix.go",
+        "port.go",
+        "quotedstring.go",
+        "secret.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "hosts_windows.go",
+            "opts_windows.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/docker/docker/opts",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/docker/docker/api/types:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/filters:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/mount:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/swarm:go_default_library",
+        "//vendor/github.com/docker/go-connections/nat:go_default_library",
+        "//vendor/github.com/docker/go-units:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "hosts_test.go",
+        "ip_test.go",
+        "mount_test.go",
+        "opts_test.go",
+        "port_test.go",
+        "quotedstring_test.go",
+        "secret_test.go",
+    ],
+    importpath = "github.com/docker/docker/opts",
+    library = ":go_default_library",
+    deps = [
+        "//vendor/github.com/docker/docker/api/types/mount:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/swarm:go_default_library",
+        "//vendor/github.com/docker/docker/pkg/testutil/assert:go_default_library",
+    ],
+)

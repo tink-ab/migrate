@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "decoder.go",
+        "encoder.go",
+    ],
+    importpath = "github.com/kshvakov/clickhouse/lib/binary",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "binary_benchmark_test.go",
+        "binary_test.go",
+    ],
+    importpath = "github.com/kshvakov/clickhouse/lib/binary",
+    library = ":go_default_library",
+    deps = ["//vendor/github.com/stretchr/testify/assert:go_default_library"],
+)

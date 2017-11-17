@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["go-bindata.go"],
+    importpath = "github.com/mattes/migrate/source/go-bindata",
+    visibility = ["//visibility:public"],
+    deps = ["//source:go_default_library"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["go-bindata_test.go"],
+    importpath = "github.com/mattes/migrate/source/go-bindata",
+    library = ":go_default_library",
+    deps = [
+        "//source/go-bindata/testdata:go_default_library",
+        "//source/testing:go_default_library",
+    ],
+)

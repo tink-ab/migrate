@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["murmur.go"],
+    importpath = "github.com/gocql/gocql/internal/murmur",
+    visibility = ["//vendor/github.com/gocql/gocql:__subpackages__"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["murmur_test.go"],
+    importpath = "github.com/gocql/gocql/internal/murmur",
+    library = ":go_default_library",
+)

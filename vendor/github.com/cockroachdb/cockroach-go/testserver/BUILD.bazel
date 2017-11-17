@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "binaries.go",
+        "testserver.go",
+    ],
+    importpath = "github.com/cockroachdb/cockroach-go/testserver",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/lib/pq:go_default_library"],
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = ["testserver_test.go"],
+    importpath = "github.com/cockroachdb/cockroach-go/testserver_test",
+    deps = [":go_default_library"],
+)

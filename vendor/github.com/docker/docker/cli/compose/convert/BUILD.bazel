@@ -1,0 +1,46 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "compose.go",
+        "service.go",
+        "volume.go",
+    ],
+    importpath = "github.com/docker/docker/cli/compose/convert",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/docker/docker/api/types:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/container:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/mount:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/network:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/swarm:go_default_library",
+        "//vendor/github.com/docker/docker/cli/command/service:go_default_library",
+        "//vendor/github.com/docker/docker/cli/compose/types:go_default_library",
+        "//vendor/github.com/docker/docker/client:go_default_library",
+        "//vendor/github.com/docker/docker/opts:go_default_library",
+        "//vendor/github.com/docker/docker/runconfig/opts:go_default_library",
+        "//vendor/github.com/docker/go-connections/nat:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "compose_test.go",
+        "service_test.go",
+        "volume_test.go",
+    ],
+    importpath = "github.com/docker/docker/cli/compose/convert",
+    library = ":go_default_library",
+    deps = [
+        "//vendor/github.com/docker/docker/api/types:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/container:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/mount:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/network:go_default_library",
+        "//vendor/github.com/docker/docker/api/types/swarm:go_default_library",
+        "//vendor/github.com/docker/docker/cli/compose/types:go_default_library",
+        "//vendor/github.com/docker/docker/pkg/testutil/assert:go_default_library",
+        "//vendor/github.com/docker/docker/pkg/testutil/tempfile:go_default_library",
+    ],
+)

@@ -1,0 +1,43 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "unsupported.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "conn_sqlite3_linux.go",
+            "graphdb_linux.go",
+            "sort_linux.go",
+            "utils_linux.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/docker/docker/pkg/graphdb",
+    visibility = ["//visibility:public"],
+    deps = select({
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "//vendor/github.com/mattn/go-sqlite3:go_default_library",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = select({
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "graphdb_linux_test.go",
+            "sort_linux_test.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/docker/docker/pkg/graphdb",
+    library = ":go_default_library",
+    deps = select({
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "//vendor/github.com/mattn/go-sqlite3:go_default_library",
+        ],
+        "//conditions:default": [],
+    }),
+)
