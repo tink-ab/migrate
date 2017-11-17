@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["bundlefile.go"],
+    importpath = "github.com/docker/docker/cli/command/bundlefile",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["bundlefile_test.go"],
+    importpath = "github.com/docker/docker/cli/command/bundlefile",
+    library = ":go_default_library",
+    deps = ["//vendor/github.com/docker/docker/pkg/testutil/assert:go_default_library"],
+)

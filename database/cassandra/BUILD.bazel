@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["cassandra.go"],
+    importpath = "github.com/mattes/migrate/database/cassandra",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//database:go_default_library",
+        "//vendor/github.com/gocql/gocql:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["cassandra_test.go"],
+    importpath = "github.com/mattes/migrate/database/cassandra",
+    library = ":go_default_library",
+    deps = [
+        "//database/testing:go_default_library",
+        "//testing:go_default_library",
+        "//vendor/github.com/gocql/gocql:go_default_library",
+    ],
+)

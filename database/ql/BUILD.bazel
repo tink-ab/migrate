@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["ql.go"],
+    importpath = "github.com/mattes/migrate/database/ql",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:go_default_library",
+        "//database:go_default_library",
+        "//vendor/github.com/cznic/ql/driver:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["ql_test.go"],
+    importpath = "github.com/mattes/migrate/database/ql",
+    library = ":go_default_library",
+    deps = [
+        "//:go_default_library",
+        "//database/testing:go_default_library",
+        "//source/file:go_default_library",
+        "//vendor/github.com/cznic/ql/driver:go_default_library",
+    ],
+)

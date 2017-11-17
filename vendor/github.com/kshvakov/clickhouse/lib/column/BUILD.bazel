@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "array.go",
+        "column.go",
+        "common.go",
+        "datetime.go",
+        "enum.go",
+        "fixed_string.go",
+        "float32.go",
+        "float64.go",
+        "int16.go",
+        "int32.go",
+        "int64.go",
+        "int8.go",
+        "nullable.go",
+        "string.go",
+        "uint16.go",
+        "uint32.go",
+        "uint64.go",
+        "uint8.go",
+        "uuid.go",
+    ],
+    importpath = "github.com/kshvakov/clickhouse/lib/column",
+    visibility = ["//visibility:public"],
+    deps = ["//vendor/github.com/kshvakov/clickhouse/lib/binary:go_default_library"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["column_benchmark_test.go"],
+    importpath = "github.com/kshvakov/clickhouse/lib/column",
+    library = ":go_default_library",
+    deps = ["//vendor/github.com/kshvakov/clickhouse/lib/binary:go_default_library"],
+)
+
+go_test(
+    name = "go_default_xtest",
+    srcs = ["column_test.go"],
+    importpath = "github.com/kshvakov/clickhouse/lib/column_test",
+    deps = [
+        ":go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/binary:go_default_library",
+        "//vendor/github.com/stretchr/testify/assert:go_default_library",
+    ],
+)

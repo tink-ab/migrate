@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["array.go"],
+    importpath = "github.com/kshvakov/clickhouse/lib/types",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/kshvakov/clickhouse/lib/binary:go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/column:go_default_library",
+        "//vendor/github.com/kshvakov/clickhouse/lib/writebuffer:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["array_test.go"],
+    importpath = "github.com/kshvakov/clickhouse/lib/types",
+    library = ":go_default_library",
+)

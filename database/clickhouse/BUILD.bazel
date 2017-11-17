@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["clickhouse.go"],
+    importpath = "github.com/mattes/migrate/database/clickhouse",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:go_default_library",
+        "//database:go_default_library",
+    ],
+)

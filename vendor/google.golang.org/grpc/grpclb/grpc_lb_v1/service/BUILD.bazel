@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_grpc_library")
+
+proto_library(
+    name = "service_proto",
+    srcs = ["service.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["//grpc_lb_v1/messages:messages_proto"],
+)
+
+go_grpc_library(
+    name = "service_go_proto",
+    importpath = "google.golang.org/grpc/grpclb/grpc_lb_v1/service",
+    proto = ":service_proto",
+    visibility = ["//visibility:public"],
+    deps = ["//grpc_lb_v1/messages:go_default_library"],
+)
+
+go_library(
+    name = "go_default_library",
+    importpath = "google.golang.org/grpc/grpclb/grpc_lb_v1/service",
+    library = ":service_go_proto",
+    visibility = ["//visibility:public"],
+)

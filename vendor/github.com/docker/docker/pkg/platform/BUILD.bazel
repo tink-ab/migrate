@@ -1,0 +1,30 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "platform.go",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:darwin_amd64": [
+            "architecture_unix.go",
+        ],
+        "@io_bazel_rules_go//go/platform:linux_amd64": [
+            "architecture_linux.go",
+            "utsname_int8.go",
+        ],
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "architecture_windows.go",
+        ],
+        "//conditions:default": [],
+    }),
+    importpath = "github.com/docker/docker/pkg/platform",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/Sirupsen/logrus:go_default_library",
+    ] + select({
+        "@io_bazel_rules_go//go/platform:windows_amd64": [
+            "//vendor/golang.org/x/sys/windows:go_default_library",
+        ],
+        "//conditions:default": [],
+    }),
+)

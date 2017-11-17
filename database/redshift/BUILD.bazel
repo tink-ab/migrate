@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["redshift.go"],
+    importpath = "github.com/mattes/migrate/database/redshift",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//database:go_default_library",
+        "//database/postgres:go_default_library",
+    ],
+)

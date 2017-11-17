@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_grpc_library")
+
+proto_library(
+    name = "intstore_proto",
+    srcs = ["intstore.proto"],
+    visibility = ["//vendor/cloud.google.com/go:__subpackages__"],
+)
+
+go_grpc_library(
+    name = "intstore_go_proto",
+    importpath = "cloud.google.com/go/internal/rpcreplay/proto/intstore",
+    proto = ":intstore_proto",
+    visibility = ["//vendor/cloud.google.com/go:__subpackages__"],
+)
+
+go_library(
+    name = "go_default_library",
+    importpath = "cloud.google.com/go/internal/rpcreplay/proto/intstore",
+    library = ":intstore_go_proto",
+    visibility = ["//vendor/cloud.google.com/go:__subpackages__"],
+)
